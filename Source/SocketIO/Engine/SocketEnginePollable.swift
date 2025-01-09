@@ -23,6 +23,9 @@
 //  THE SOFTWARE.
 
 import Foundation
+#if os(Android)
+import FoundationNetworking
+#endif
 
 /// Protocol that is used to implement socket.io polling support
 public protocol SocketEnginePollable: SocketEngineSpec {
@@ -65,7 +68,7 @@ public protocol SocketEnginePollable: SocketEngineSpec {
     /// - parameter message: The message to send.
     /// - parameter withType: The type of message to send.
     /// - parameter withData: The data associated with this message.
-    func sendPollMessage(_ message: String, withType type: SocketEnginePacketType, withData datas: [Data], completion: (() -> ())?)
+    func sendPollMessage(_ message: String, withType type: SocketEnginePacketType, withData datas: [Data], completion: (@Sendable () -> ())?)
 
     /// Call to stop polling and invalidate the URLSession.
     func stopPolling()
@@ -237,7 +240,7 @@ extension SocketEnginePollable {
     /// - parameter withType: The type of message to send.
     /// - parameter withData: The data associated with this message.
     /// - parameter completion: Callback called on transport write completion.
-    public func sendPollMessage(_ message: String, withType type: SocketEnginePacketType, withData datas: [Data], completion: (() -> ())? = nil) {
+    public func sendPollMessage(_ message: String, withType type: SocketEnginePacketType, withData datas: [Data], completion: (@Sendable () -> ())? = nil) {
         DefaultSocketLogger.Logger.log("Sending poll: \(message) as type: \(type.rawValue)", type: "SocketEnginePolling")
 
         postWait.append((String(type.rawValue) + message, completion))

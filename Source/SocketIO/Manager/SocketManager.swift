@@ -155,7 +155,6 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     ///
     /// - parameter socketURL: The url of the socket.io server.
     /// - parameter config: The config for this socket.
-    @objc
     public convenience init(socketURL: URL, config: [String: Any]?) {
         self.init(socketURL: socketURL, config: config?.toSocketConfiguration() ?? [])
     }
