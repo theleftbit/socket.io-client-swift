@@ -14,7 +14,7 @@ import Foundation
 import FoundationNetworking
 #endif
 
-class SocketSideEffectTest: XCTestCase {
+class SocketSideEffectTest: XCTestCase, @unchecked Sendable {
     func testInitialCurrentAck() {
         XCTAssertEqual(socket.currentAck, -1)
     }
@@ -490,7 +490,7 @@ struct ThrowingData: SocketData {
 
 }
 
-class TestEngine: SocketEngineSpec {
+class TestEngine: SocketEngineSpec, @unchecked Sendable {
     weak var client: SocketEngineClient?
     private(set) var closed = false
     private(set) var compress = false

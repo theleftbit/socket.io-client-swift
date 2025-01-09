@@ -40,7 +40,7 @@ import Foundation
 ///
 /// **NOTE**: The client is not thread/queue safe, all interaction with the socket should be done on the `manager.handleQueue`
 ///
-open class SocketIOClient: NSObject, SocketIOClientSpec {
+open class SocketIOClient: NSObject, SocketIOClientSpec, @unchecked Sendable {
     // MARK: Properties
 
     /// The namespace that this socket is currently connected to.
@@ -122,7 +122,7 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     /// - parameter timeoutAfter: The number of seconds after which if we are not connected we assume the connection
     ///                           has failed. Pass 0 to never timeout.
     /// - parameter handler: The handler to call when the client fails to connect.
-    open func connect(withPayload payload: [String: Any]? = nil, timeoutAfter: Double, withHandler handler: (() -> ())?) {
+    open func connect(withPayload payload: [String: Any]? = nil, timeoutAfter: Double, withHandler handler: (@Sendable () -> ())?) {
         assert(timeoutAfter >= 0, "Invalid timeout: \(timeoutAfter)")
 
         guard let manager = self.manager, status != .connected else {

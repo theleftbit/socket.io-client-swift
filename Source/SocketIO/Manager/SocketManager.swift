@@ -45,7 +45,7 @@ import Foundation
 ///
 /// **NOTE**: The manager is not thread/queue safe, all interaction with the manager should be done on the `handleQueue`
 ///
-open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDataBufferable, ConfigSettable {
+open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDataBufferable, ConfigSettable, @unchecked Sendable {
     private static let logType = "SocketManager"
 
     // MARK: Properties
@@ -95,16 +95,16 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     public var nsps = [String: SocketIOClient]()
 
     /// If `true`, this client will try and reconnect on any disconnects.
-    public var reconnects = true
+    public var reconnects: Bool = true
 
     /// The minimum number of seconds to wait before attempting to reconnect.
-    public var reconnectWait = 10
+    public var reconnectWait: Int = 10
 
     /// The maximum number of seconds to wait before attempting to reconnect.
-    public var reconnectWaitMax = 30
+    public var reconnectWaitMax: Int = 30
 
     /// The randomization factor for calculating reconnect jitter.
-    public var randomizationFactor = 0.5
+    public var randomizationFactor: Double = 0.5
 
     /// The status of this manager.
     public private(set) var status: SocketIOStatus = .notConnected {

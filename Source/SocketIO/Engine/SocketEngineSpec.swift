@@ -30,7 +30,7 @@ import FoundationNetworking
 #endif
 
 /// Specifies a SocketEngine.
-public protocol SocketEngineSpec: AnyObject {
+public protocol SocketEngineSpec: AnyObject, Sendable {
     // MARK: Properties
 
     /// The client for this engine.

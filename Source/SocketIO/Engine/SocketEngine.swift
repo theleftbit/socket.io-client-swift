@@ -32,7 +32,7 @@ import FoundationNetworking
 /// The class that handles the engine.io protocol and transports.
 /// See `SocketEnginePollable` and `SocketEngineWebsocket` for transport specific methods.
 open class SocketEngine: NSObject, WebSocketDelegate, URLSessionDelegate,
-                         SocketEnginePollable, SocketEngineWebsocket, ConfigSettable {
+                         SocketEnginePollable, SocketEngineWebsocket, ConfigSettable, @unchecked Sendable {
   
   
     // MARK: Properties

@@ -77,7 +77,7 @@ public protocol SocketIOClientSpec : AnyObject {
     /// - parameter timeoutAfter: The number of seconds after which if we are not connected we assume the connection
     ///                           has failed. Pass 0 to never timeout.
     /// - parameter handler: The handler to call when the client fails to connect.
-    func connect(withPayload payload: [String: Any]?, timeoutAfter: Double, withHandler handler: (() -> ())?)
+    func connect(withPayload payload: [String: Any]?, timeoutAfter: Double, withHandler handler: (@Sendable() -> ())?)
 
     /// Called when the client connects to a namespace. If the client was created with a namespace upfront,
     /// then this is only called when the client connects to that namespace.

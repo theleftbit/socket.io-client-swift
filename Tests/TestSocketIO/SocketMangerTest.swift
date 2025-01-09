@@ -201,7 +201,7 @@ public enum ManagerExpectation: String {
     case emitAllEventCalled
 }
 
-public class TestManager: SocketManager {
+public class TestManager: SocketManager, @unchecked Sendable {
     public func setCurrentReconnect(currentReconnect: Int) {
         self.currentReconnectAttempt = currentReconnect
     }
@@ -233,7 +233,7 @@ public class TestManager: SocketManager {
     }
 }
 
-public class TestSocket: SocketIOClient {
+public class TestSocket: SocketIOClient, @unchecked Sendable {
     public var expectations = [ManagerExpectation: XCTestExpectation]()
 
     public override func didConnect(toNamespace nsp: String, payload: [String: Any]?) {
