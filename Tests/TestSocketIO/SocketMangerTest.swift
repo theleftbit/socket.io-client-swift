@@ -257,9 +257,10 @@ public class TestSocket: SocketIOClient, @unchecked Sendable {
 }
 
 #if os(Android)
+/// I know comparing labels is stupid, but it's enough for now
 extension DispatchQueue: @retroactive Equatable {
     public static func == (lhs: DispatchQueue, rhs: DispatchQueue) -> Bool {
-        return lhs === rhs
+        return lhs.label == rhs.label
     }
 }
 #endif

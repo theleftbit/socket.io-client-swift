@@ -521,16 +521,17 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
 
     func reconnectInterval(attempts: Int) -> Double {
         // apply exponential factor
-        let backoffFactor = pow(1.5, attempts)
-        let interval = Double(reconnectWait) * Double(truncating: backoffFactor as NSNumber)
-        // add in a random factor smooth thundering herds
+        let backoffFactor = pow(1.5, Double(attempts))
+        let interval = Double(reconnectWait) * backoffFactor
+        // add in a random factor to smooth thundering herds
         let rand = Double.random(in: 0 ..< 1)
-        let randomFactor = rand * randomizationFactor * Double(truncating: interval as NSNumber)
+        let randomFactor = rand * randomizationFactor * interval
         // add in random factor, and clamp to min and max values
         let combined = interval + randomFactor
-        return Double(fmax(Double(reconnectWait), fmin(combined, Double(reconnectWaitMax))))
+        let value = Double(max(Double(reconnectWait), min(combined, Double(reconnectWaitMax))))
+        return value
     }
-
+    
     /// Sets manager specific configs.
     ///
     /// parameter config: The configs that should be set.
